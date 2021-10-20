@@ -28,4 +28,6 @@ public class ProductViews {
 
     private String typeName;
 
+    private Boolean isDelete;
+
 }

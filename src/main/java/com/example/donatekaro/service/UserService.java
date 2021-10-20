@@ -161,11 +161,11 @@ public class UserService {
 
 
     //User login
-    public Object login(String email, String password) {
+    public Object login(UserRequest  userRequest) {
         /*
          * ToDo: Implement the validation on the email and password
          */
-        User user = userRepo.findUserByEmailAndPassword(email, password);
+        User user = userRepo.findUserByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
 
         //check if the if the user exists or not
         if (user != null) {

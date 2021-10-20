@@ -17,23 +17,33 @@ public class ProductController {
 
 
     @PostMapping("/addProduct")
-    public Product saveProduct(@RequestBody ProductRequest product){
+    public Object saveProduct(@RequestBody ProductRequest product) {
         return productService.save(product);
     }
 
 
     @GetMapping("getProducts")
-    public List<ProductViews> getAllProduct(){
+    public List<ProductViews> getAllProduct() {
         return productService.getAllProduct();
     }
 
 
-
     @GetMapping("/users/products/{userId}")
-    public  List<ProductViews> getAllProductByuser(@PathVariable long userId){
+    public List<ProductViews> getAllProductByuser(@PathVariable long userId) {
         return productService.getAllProductByUser(userId);
     }
 
+    @PutMapping("/updateProduct/{productId}")
+
+    public Object updateProduct(@PathVariable long productId, @RequestBody ProductRequest productRequest) {
+        return productService.updateProductById(productId, productRequest);
+    }
+
+    @DeleteMapping("/delete/product/{productId}")
+
+    public Object deleteProduct(@PathVariable long productId) {
+        return productService.deleteProduct(productId);
+    }
 
 
 }

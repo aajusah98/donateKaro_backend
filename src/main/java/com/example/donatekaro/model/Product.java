@@ -27,6 +27,9 @@ public class Product implements Serializable {
     @Column(nullable = true)
     private Long productPrice;
 
+    @Column
+    private Boolean isDeleted=false;
+
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User userId;

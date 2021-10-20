@@ -6,6 +6,7 @@ import com.example.donatekaro.dto.ProductRequest;
 import com.example.donatekaro.model.Product;
 import com.example.donatekaro.model.User;
 import com.example.donatekaro.views.ProductViews;
+import com.example.donatekaro.views.ResponseObject;
 import com.example.donatekaro.views.UserViews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,9 @@ public class ProductService {
 //    }
 
 
+    public List<ProductViews> getAllProduct() {
 
-    public  List<ProductViews> getAllProduct(){
-
-        List<Product> products= productRepository.findAll();
+        List<Product> products = productRepository.findAll();
 
         List<ProductViews> updatedProducts = products.stream().map(product -> {
             ProductViews productViewList = new ProductViews();
@@ -44,6 +44,7 @@ public class ProductService {
             productViewList.setAddress(product.getUserId().getAddress());
             productViewList.setMobile(product.getUserId().getMobile());
             productViewList.setTypeName(product.getUserId().getUserType().getTypeName());
+            productViewList.setIsDelete(product.getIsDeleted());
             return productViewList;
         }).collect(Collectors.toList());
 
@@ -51,7 +52,7 @@ public class ProductService {
     }
 
 
-    public Product save(ProductRequest product){
+    public Object save(ProductRequest product) {
         Product product1 = new Product();
         product1.setDescription(product.getDescription());
         product1.setIsFree(product.getIsFree());
@@ -60,18 +61,37 @@ public class ProductService {
         User user = userService.getUserById(product.getUserId());
         product1.setUserId(user);
 
-        return productRepository.save(product1);
+        productRepository.save(product1);
+
+        return new ResponseObject(2, "Product Added");
     }
 
 
+    public Object updateProductById(long productId, ProductRequest productRequest) {
 
 
-    public  List<ProductViews> getAllProductByUser(long id){
+        Product existProduct = productRepository.getProductByProductID(productId);
+
+        existProduct.setDescription(productRequest.getDescription());
+
+        existProduct.setIsFree(productRequest.getIsFree());
+
+        existProduct.setProductPrice(productRequest.getProductPrice());
+
+        productRepository.save(existProduct);
+
+
+        return new ResponseObject(12, "Product Updated");
+
+    }
+
+
+    public List<ProductViews> getAllProductByUser(long id) {
         User user = userService.getUserById(id);
-        List<Product> productList= productRepository.getAllByUserId(user);
+        List<Product> productList = productRepository.getAllByUserId(user);
 
-        List<ProductViews> updatedProductList=productList.stream().map(product -> {
-            ProductViews productViews=new ProductViews();
+        List<ProductViews> updatedProductList = productList.stream().map(product -> {
+            ProductViews productViews = new ProductViews();
             productViews.setProductID(product.getProductID());
             productViews.setDescription(product.getDescription());
             productViews.setIsFree(product.getIsFree());
@@ -82,10 +102,24 @@ public class ProductService {
             productViews.setAddress(product.getUserId().getAddress());
             productViews.setMobile(product.getUserId().getMobile());
             productViews.setTypeName(product.getUserId().getUserType().getTypeName());
+            productViews.setIsDelete(product.getIsDeleted());
             return productViews;
         }).collect(Collectors.toList());
 
         return updatedProductList;
+    }
+
+    public Object deleteProduct(long productId) {
+
+        Product existProduct = productRepository.getProductByProductID(productId);
+
+        existProduct.setIsDeleted(true);
+
+        productRepository.save(existProduct);
+
+
+        return new ResponseObject(12, "Product Deleted");
+
     }
 
 }

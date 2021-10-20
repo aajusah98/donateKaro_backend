@@ -17,13 +17,13 @@ public class UserController {
     @Autowired
     UserService service;
 
-    @PostMapping("/registration")
+        @PostMapping("/registration")
     public Object regisration(@RequestBody UserRequest userRequest) throws NumberFormatException, IOException {
         return service.registration(userRequest);
     }
 
 
-    @PutMapping("/updateUser/{userId}")
+        @PutMapping("/updateUser/{userId}")
     public Object updateUser(@PathVariable long userId,@RequestBody UserRequest userRequest)throws  NumberFormatException,IOException{
 
         return service.updateUserById(userId,userRequest);
@@ -32,9 +32,9 @@ public class UserController {
     //login
     @PostMapping("login")
     @ResponseBody
-    public Object login(@RequestParam("email") String email ,@RequestParam("password") String password) {
+    public Object login(@RequestBody UserRequest userRequest) {
         System.out.println("out -------------------------------------------------------");
-        return service.login(email, password);
+        return service.login(userRequest);
     }
 
     @GetMapping("/users")
