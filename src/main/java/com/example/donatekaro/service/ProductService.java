@@ -23,9 +23,6 @@ public class ProductService {
     @Autowired
     private UserService userService;
 
-//    public List<Product> getAllProduct() {
-//        return productRepository.findAll();
-//    }
 
 
     public List<ProductViews> getAllProduct() {
@@ -45,6 +42,8 @@ public class ProductService {
             productViewList.setMobile(product.getUserId().getMobile());
             productViewList.setTypeName(product.getUserId().getUserType().getTypeName());
             productViewList.setIsDelete(product.getIsDeleted());
+            productViewList.setUpdatedAt(product.getUpdatedAt());
+            productViewList.setCreatedAt(product.getCreatedAt());
             return productViewList;
         }).collect(Collectors.toList());
 
@@ -103,6 +102,8 @@ public class ProductService {
             productViews.setMobile(product.getUserId().getMobile());
             productViews.setTypeName(product.getUserId().getUserType().getTypeName());
             productViews.setIsDelete(product.getIsDeleted());
+            productViews.setUpdatedAt(product.getUpdatedAt());
+            productViews.setCreatedAt(product.getCreatedAt());
             return productViews;
         }).collect(Collectors.toList());
 
@@ -121,5 +122,7 @@ public class ProductService {
         return new ResponseObject(12, "Product Deleted");
 
     }
+
+
 
 }

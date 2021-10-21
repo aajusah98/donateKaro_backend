@@ -1,8 +1,10 @@
 package com.example.donatekaro.controller;
 
-import com.example.donatekaro.dto.ProductRequest;
+import com.example.donatekaro.dto.SubCategoryRequest;
 import com.example.donatekaro.model.Category;
+import com.example.donatekaro.model.SubCategory;
 import com.example.donatekaro.service.CategoryService;
+import com.example.donatekaro.service.SubCategoryService;
 import com.example.donatekaro.views.ProductViews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,30 +12,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class CategoryController {
+public class SubCategoryController {
 
     @Autowired
-    private  CategoryService categoryService;
+    private SubCategoryService subCategoryService;
 
-    @PostMapping("/addCategory")
-    public Category addCategory(@RequestBody Category category){
+    @PostMapping("/addSubCategory")
+    public Object addSubCategory(@RequestBody SubCategoryRequest subCategoryRequest){
 
-        return categoryService.addCategory(category);
+        return subCategoryService.addSubCategory(subCategoryRequest);
     }
 
-    @PutMapping("/updateCategory/{categoryId}")
-    public Object updateProduct(@PathVariable long categoryId, @RequestBody Category category) {
-        return categoryService.updateCategoryById(categoryId,category);
+    @PutMapping("/updateSubCategory/{subCategoryId}")
+    public Object updateSubProduct(@PathVariable long subCategoryId, @RequestBody SubCategoryRequest subCategoryRequest) {
+        return subCategoryService.updateSubCategoryById(subCategoryId,subCategoryRequest);
     }
 
-    @GetMapping("getCategory")
-    public List<Category> getAllCategory() {
-        return categoryService.getAllCategory();
+    @GetMapping("getSubCategory")
+    public List<SubCategory> getAllSubCategory() {
+        return subCategoryService.getAllSubCategory();
     }
 
-    @DeleteMapping("/delete/category/{categoryId}")
-    public Object deleteCategory(@PathVariable long categoryId) {
-        return categoryService.deleteCategory(categoryId);
+
+    @GetMapping("/category/subCategory/{categoryId}")
+    public List<SubCategory> getAllSubCategoryByCatgeoryId(@PathVariable long categoryId) {
+        return subCategoryService.getAllSubCategoryByCatgeoryId(categoryId);
+    }
+
+
+    @DeleteMapping("/delete/subCategory/{subCategoryId}")
+    public Object deleteCategory(@PathVariable long subCategoryId) {
+        return subCategoryService.deleteSubCategory(subCategoryId);
     }
 
 

@@ -6,6 +6,7 @@ import com.example.donatekaro.model.UserType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 public class UserViews {
@@ -25,5 +26,10 @@ public class UserViews {
 
 	private String typeName;
 
+	private Boolean isDelete;
+
+	private Date createdAt;
+
+	private Date updatedAt;
 }
 

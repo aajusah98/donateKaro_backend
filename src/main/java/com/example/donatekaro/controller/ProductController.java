@@ -36,7 +36,7 @@ public class ProductController {
     @PutMapping("/updateProduct/{productId}")
 
     public Object updateProduct(@PathVariable long productId, @RequestBody ProductRequest productRequest) {
-        return productService.updateProductById(productId, productRequest);
+        return productService.updateProductById(productId,productRequest);
     }
 
     @DeleteMapping("/delete/product/{productId}")
@@ -44,6 +44,5 @@ public class ProductController {
     public Object deleteProduct(@PathVariable long productId) {
         return productService.deleteProduct(productId);
     }
-
 
 }

@@ -1,9 +1,13 @@
 package com.example.donatekaro.service;
 
 import com.example.donatekaro.dao.CategoryRepository;
-import com.example.donatekaro.dto.ProductRequest;
+import com.example.donatekaro.dao.SubCategoryRepository;
+import com.example.donatekaro.dto.SubCategoryRequest;
 import com.example.donatekaro.model.Category;
 import com.example.donatekaro.model.Product;
+import com.example.donatekaro.model.SubCategory;
+import com.example.donatekaro.model.User;
+import com.example.donatekaro.views.ProductViews;
 import com.example.donatekaro.views.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,43 +15,63 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class SubCategoryService {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private SubCategoryRepository subCategoryRepository;
 
-    public Category addCategory(Category category){
+    @Autowired
+    private CategoryService categoryService;
 
-        return categoryRepository.save(category);
+
+    public Object addSubCategory(SubCategoryRequest subCategoryRequest){
+        SubCategory subCategory1 = new SubCategory();
+        subCategory1.setSubCategoryName(subCategoryRequest.getSubCategoryName());
+
+        Category category = categoryService.getCategoriesByCategoryId(subCategoryRequest.getCategoryId());
+        subCategory1.setCategoryId(category);
+
+        return subCategoryRepository.save(subCategory1);
 
     }
 
-    public Object updateCategoryById(long categoryId, Category category) {
+    public Object updateSubCategoryById(long subCategoryId, SubCategoryRequest subCategoryRequest) {
 
 
-        Category category1 = categoryRepository.getById(categoryId);
+        SubCategory subCategory1 = subCategoryRepository.getSubCategoryBySubCategoryId(subCategoryId);
 
-        category1.setCategoryCode(category.getCategoryCode());
-        category1.setCategoryName(category.getCategoryName());
+        subCategory1.setSubCategoryName(subCategoryRequest.getSubCategoryName());
 
-         categoryRepository.save(category1);
-        return new ResponseObject(12, "Category Updated");
+        Category category = categoryService.getCategoriesByCategoryId(subCategoryRequest.getCategoryId());
+        subCategory1.setCategoryId(category);
+
+
+        return  subCategoryRepository.save(subCategory1);
     }
 
-    public List<Category> getAllCategory(){
-        return categoryRepository.findAll();
+    public List<SubCategory> getAllSubCategory(){
+        return subCategoryRepository.findAll();
     }
 
-    public Object deleteCategory(long categoryId) {
 
-        Category category = categoryRepository.getById(categoryId);
+    public List<SubCategory> getAllSubCategoryByCatgeoryId(long categoryId) {
+        Category category = categoryService.getCategoriesByCategoryId(categoryId);
 
-        category.setIsDeleted(true);
+        List<SubCategory> subCategoryList = subCategoryRepository.getAllByCategoryId(category);
 
-        categoryRepository.save(category);
+        return subCategoryList;
+    }
+
+    public Object deleteSubCategory(long subCategoryId) {
+
+        SubCategory subCategory = subCategoryRepository.getSubCategoryBySubCategoryId(subCategoryId);
+
+        subCategory.setIsDeleted(true);
+
+        subCategoryRepository.save(subCategory);
 
 
-        return new ResponseObject(12, "Product Deleted");
+        return new ResponseObject(12, "Sub Category Deleted");
 
     }
 

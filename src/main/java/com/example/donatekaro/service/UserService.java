@@ -3,6 +3,7 @@ package com.example.donatekaro.service;
 import com.example.donatekaro.dao.UserRepository;
 import com.example.donatekaro.dao.UserTypeRepository;
 import com.example.donatekaro.dto.UserRequest;
+import com.example.donatekaro.model.Product;
 import com.example.donatekaro.model.User;
 import com.example.donatekaro.model.UserType;
 import com.example.donatekaro.util.UserValidator;
@@ -24,16 +25,6 @@ public class UserService {
     UserTypeRepository userTypeRepository;
 
 
-// public User save(User user){
-//            return userRepo.save(user);
-// }
-
-
-//    public List<User> getAllUsers()
-//    {
-//        return userRepo.findAll();
-//    }
-
 
     public List<UserViews> getAllUsers() {
         List<User> users = userRepo.findAll();
@@ -47,6 +38,9 @@ public class UserService {
             userViews.setMobile(user.getMobile());
             userViews.setAddress(user.getAddress());
             userViews.setTypeName(user.getUserType().getTypeName());
+            userViews.setIsDelete(user.getIsDeleted());
+            userViews.setUpdatedAt(user.getUpdatedAt());
+            userViews.setCreatedAt(user.getCreatedAt());
             return userViews;
         }).collect(Collectors.toList());
 
@@ -114,6 +108,8 @@ public class UserService {
         userViews.setMobile(userRequest.getMobile());
         userViews.setAddress(userRequest.getAddress());
         userViews.setTypeName(userType.getTypeName());
+        userViews.setCreatedAt(user.getCreatedAt());
+        userViews.setUpdatedAt(user.getUpdatedAt());
 
         return userViews;
     }
@@ -162,9 +158,7 @@ public class UserService {
 
     //User login
     public Object login(UserRequest  userRequest) {
-        /*
-         * ToDo: Implement the validation on the email and password
-         */
+
         User user = userRepo.findUserByEmailAndPassword(userRequest.getEmail(), userRequest.getPassword());
 
         //check if the if the user exists or not
@@ -177,6 +171,8 @@ public class UserService {
             userViews.setMobile(user.getMobile());
             userViews.setAddress(user.getAddress());
             userViews.setTypeName(user.getUserType().getTypeName());
+            userViews.setCreatedAt(user.getCreatedAt());
+            userViews.setUpdatedAt(user.getUpdatedAt());
             return userViews;
         } else {
             return new ResponseObject(0, "Inavlid email or password!");
@@ -187,4 +183,34 @@ public class UserService {
     public User getUserById(long id) {
         return userRepo.getUserById(id);
     }
+
+    public UserViews getUserProfile( long userId ) {
+        User user = userRepo.getUserById(userId);
+            UserViews userViews = new UserViews();
+            userViews.setId(user.getId());
+            userViews.setFirstName(user.getFirstName());
+            userViews.setLastName(user.getLastName());
+            userViews.setEmail(user.getEmail());
+            userViews.setMobile(user.getMobile());
+            userViews.setAddress(user.getAddress());
+            userViews.setTypeName(user.getUserType().getTypeName());
+            userViews.setIsDelete(user.getIsDeleted());
+            userViews.setCreatedAt(user.getCreatedAt());
+            userViews.setUpdatedAt(user.getUpdatedAt());
+            return userViews;
+    }
+
+    public Object deleteUser(long userId) {
+
+        User existUser = userRepo.getUserById(userId);
+
+        existUser.setIsDeleted(true);
+
+        userRepo.save(existUser);
+
+        return new ResponseObject(2, "User Deleted");
+
+    }
+
+
 }

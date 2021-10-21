@@ -2,33 +2,30 @@ package com.example.donatekaro.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "category")
+@Table(name = "sub_category")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class Category  implements Serializable {
+public class SubCategory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long subCategoryId;
 
     @Column(nullable = false)
-    private String categoryName;
+    private String subCategoryName;
 
-    @Column(nullable = false, length = 100)
-    private String categoryCode;
+
+    @JoinColumn(name = "category_id", referencedColumnName = "categoryId")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Category categoryId;
+
 
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -42,5 +42,15 @@ public class UserController {
         return service.getAllUsers();
     }
 
+    @GetMapping("/user/profile/{userId}")
+    public UserViews getUserById(@PathVariable long userId){
+            return service.getUserProfile(userId);
+    }
+
+    @DeleteMapping("/delete/user/{userId}")
+
+    public Object deleteProduct(@PathVariable long userId) {
+        return service.deleteUser(userId);
+    }
 
 }

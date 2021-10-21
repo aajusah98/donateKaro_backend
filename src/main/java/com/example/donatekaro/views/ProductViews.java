@@ -3,6 +3,7 @@ package com.example.donatekaro.views;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 @Data
 public class ProductViews {
@@ -29,5 +30,9 @@ public class ProductViews {
     private String typeName;
 
     private Boolean isDelete;
+
+    private Date createdAt;
+
+    private Date updatedAt;
 
 }

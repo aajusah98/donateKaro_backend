@@ -1,20 +1,13 @@
 package com.example.donatekaro.dto;
 
-import com.example.donatekaro.model.User;
 import lombok.Data;
 
-import javax.persistence.*;
-
 @Data
-public class ProductRequest {
+public class SubCategoryRequest {
 
     private Long productID;
 
-    private String description;
+    private String subCategoryName;
 
-    private  String isFree;
-
-    private Long productPrice;
-
-    private Long userId;
+    private Long categoryId;
 }
