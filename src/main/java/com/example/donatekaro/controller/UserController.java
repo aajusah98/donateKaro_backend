@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "https://donatekarobackend.herokuapp.com")
+@CrossOrigin
 @RestController
 public class UserController {
 
