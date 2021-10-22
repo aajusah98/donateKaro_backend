@@ -35,4 +35,11 @@ public class ProductViews {
 
     private Date updatedAt;
 
+    private String productImage;
+
+    private String subCategoryName;
+
+    private String categoryName;
+
+
 }

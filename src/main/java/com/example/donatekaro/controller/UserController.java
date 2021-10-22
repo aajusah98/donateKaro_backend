@@ -31,9 +31,7 @@ public class UserController {
 
     //login
     @PostMapping("login")
-    @ResponseBody
     public Object login(@RequestBody UserRequest userRequest) {
-        System.out.println("out -------------------------------------------------------");
         return service.login(userRequest);
     }
 

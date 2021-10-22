@@ -18,13 +18,13 @@ public class SubCategoryController {
     private SubCategoryService subCategoryService;
 
     @PostMapping("/addSubCategory")
-    public Object addSubCategory(@RequestBody SubCategoryRequest subCategoryRequest){
+    public SubCategory addSubCategory(@RequestBody SubCategoryRequest subCategoryRequest){
 
         return subCategoryService.addSubCategory(subCategoryRequest);
     }
 
     @PutMapping("/updateSubCategory/{subCategoryId}")
-    public Object updateSubProduct(@PathVariable long subCategoryId, @RequestBody SubCategoryRequest subCategoryRequest) {
+    public SubCategory updateSubProduct(@PathVariable long subCategoryId, @RequestBody SubCategoryRequest subCategoryRequest) {
         return subCategoryService.updateSubCategoryById(subCategoryId,subCategoryRequest);
     }
 

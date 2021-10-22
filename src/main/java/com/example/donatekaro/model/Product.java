@@ -30,6 +30,9 @@ public class Product implements Serializable {
     private Long productPrice;
 
     @Column
+    private String productImage;
+
+    @Column
     private Boolean isDeleted=false;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,5 +59,9 @@ public class Product implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User userId;
 
+
+    @JoinColumn(name = "subCategoryId", referencedColumnName = "subCategoryId")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private SubCategory subCategoryId;
 
 }

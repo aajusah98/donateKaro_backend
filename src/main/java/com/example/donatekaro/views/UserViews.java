@@ -1,11 +1,6 @@
 package com.example.donatekaro.views;
 
-
-import com.example.donatekaro.model.User;
-import com.example.donatekaro.model.UserType;
 import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Date;
 
 @Data

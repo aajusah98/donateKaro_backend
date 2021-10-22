@@ -17,4 +17,6 @@ public class ProductRequest {
     private Long productPrice;
 
     private Long userId;
+
+    private Long subCategoryId;
 }

@@ -1,5 +1,6 @@
 package com.example.donatekaro.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -37,6 +39,9 @@ public class SubCategory implements Serializable {
     private Date updatedAt;
 
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subCategoryId", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Product> productList;
 
 
     private Boolean isDeleted=false;

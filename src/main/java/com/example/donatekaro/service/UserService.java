@@ -173,6 +173,7 @@ public class UserService {
             userViews.setTypeName(user.getUserType().getTypeName());
             userViews.setCreatedAt(user.getCreatedAt());
             userViews.setUpdatedAt(user.getUpdatedAt());
+            userViews.setIsDelete(user.getIsDeleted());
             return userViews;
         } else {
             return new ResponseObject(0, "Inavlid email or password!");

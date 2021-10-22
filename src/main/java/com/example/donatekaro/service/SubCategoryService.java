@@ -9,9 +9,11 @@ import com.example.donatekaro.model.SubCategory;
 import com.example.donatekaro.model.User;
 import com.example.donatekaro.views.ProductViews;
 import com.example.donatekaro.views.ResponseObject;
+import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.Oneway;
 import java.util.List;
 
 @Service
@@ -24,7 +26,7 @@ public class SubCategoryService {
     private CategoryService categoryService;
 
 
-    public Object addSubCategory(SubCategoryRequest subCategoryRequest){
+    public SubCategory addSubCategory(SubCategoryRequest subCategoryRequest){
         SubCategory subCategory1 = new SubCategory();
         subCategory1.setSubCategoryName(subCategoryRequest.getSubCategoryName());
 
@@ -35,7 +37,7 @@ public class SubCategoryService {
 
     }
 
-    public Object updateSubCategoryById(long subCategoryId, SubCategoryRequest subCategoryRequest) {
+    public SubCategory updateSubCategoryById(long subCategoryId, SubCategoryRequest subCategoryRequest) {
 
 
         SubCategory subCategory1 = subCategoryRepository.getSubCategoryBySubCategoryId(subCategoryId);
@@ -55,6 +57,7 @@ public class SubCategoryService {
 
 
     public List<SubCategory> getAllSubCategoryByCatgeoryId(long categoryId) {
+
         Category category = categoryService.getCategoriesByCategoryId(categoryId);
 
         List<SubCategory> subCategoryList = subCategoryRepository.getAllByCategoryId(category);
@@ -71,8 +74,16 @@ public class SubCategoryService {
         subCategoryRepository.save(subCategory);
 
 
-        return new ResponseObject(12, "Sub Category Deleted");
+        return (Object) new ResponseObject(12, "Sub Category Deleted");
 
+    }
+
+    public SubCategory getSubCategoryById(long subCategoryId){
+        return subCategoryRepository.getSubCategoryBySubCategoryId(subCategoryId);
+    }
+
+    public List<SubCategory> getAllByCategoryId(Category category){
+        return subCategoryRepository.getAllByCategoryId(category);
     }
 
 }

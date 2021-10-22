@@ -2,11 +2,16 @@ package com.example.donatekaro.controller;
 
 import com.example.donatekaro.dto.ProductRequest;
 import com.example.donatekaro.model.Product;
+import com.example.donatekaro.model.SubCategory;
 import com.example.donatekaro.service.ProductService;
 import com.example.donatekaro.views.ProductViews;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,9 +21,11 @@ public class ProductController {
     ProductService productService;
 
 
+
     @PostMapping("/addProduct")
-    public Object saveProduct(@RequestBody ProductRequest product) {
-        return productService.save(product);
+    public Object saveProduct(@RequestParam("productFile") MultipartFile productFile ,@RequestParam("product") String product) throws IOException {
+        ProductRequest productRequest = new ObjectMapper().readValue(product, ProductRequest.class);
+        return productService.save(productRequest,productFile);
     }
 
 
@@ -33,6 +40,15 @@ public class ProductController {
         return productService.getAllProductByUser(userId);
     }
 
+    @GetMapping("/subCategory/products/{subCatId}")
+    public List<ProductViews> getAllProductBySubCategoryId(@PathVariable long subCatId) {
+        return productService.getAllProductBySubCategoryId(subCatId);
+    }
+
+
+
+
+
     @PutMapping("/updateProduct/{productId}")
 
     public Object updateProduct(@PathVariable long productId, @RequestBody ProductRequest productRequest) {
@@ -44,5 +60,6 @@ public class ProductController {
     public Object deleteProduct(@PathVariable long productId) {
         return productService.deleteProduct(productId);
     }
+
 
 }
